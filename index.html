@@ -1,0 +1,746 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Perpustakaan Sederhana</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+<canvas id="bgParticles"></canvas>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                <path d="M8 7h8"/>
+                <path d="M8 11h6"/>
+            </svg>
+        </div>
+        <div class="brand-text">
+            <h2>PERPUS DIGITAL</h2>
+            <div class="brand-status">
+                <span class="status-dot"></span>
+                <span>DB: myperpus</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section-label">URL Hyperlink &amp; Menu</div>
+
+        <a href="index.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <div class="nav-meta">
+                <span class="nav-title">HOME</span>
+                <span class="nav-url">localhost/bigdatauts</span>
+            </div>
+        </a>
+
+        <a href="viewbuku.html" class="nav-item ">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+            <div class="nav-meta">
+                <span class="nav-title">DATA BUKU</span>
+                <span class="nav-url">localhost/bigdatauts/viewbuku.php</span>
+            </div>
+        </a>
+
+        <a href="viewfilterbukuterbaru.html" class="nav-item ">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <div class="nav-meta">
+                <span class="nav-title">FILTER DATA BUKU "TERBARU"</span>
+                <span class="nav-url">localhost/bigdatauts/viewfilterbukuterbaru.php</span>
+            </div>
+        </a>
+
+        <a href="viewfilterbukuummetropress.html" class="nav-item ">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                <path d="M9 22v-4h6v4"/>
+                <path d="M8 6h.01"/><path d="M16 6h.01"/>
+                <path d="M12 6h.01"/><path d="M12 10h.01"/>
+                <path d="M12 14h.01"/><path d="M16 10h.01"/>
+                <path d="M16 14h.01"/><path d="M8 10h.01"/>
+                <path d="M8 14h.01"/>
+            </svg>
+            <div class="nav-meta">
+                <span class="nav-title">UM Metro Press</span>
+                <span class="nav-url">localhost/bigdatauts/viewfilterbukuummetropress.php</span>
+            </div>
+        </a>
+
+        <a href="me.html" class="nav-item ">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <div class="nav-meta">
+                <span class="nav-title">ABOUT PEMBUAT PROGRAM</span>
+                <span class="nav-url">localhost/bigdatauts/me.php</span>
+            </div>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="me.html" class="mini-profile">
+            <img src="profil.jpeg" alt="Neneng Wahyuni">
+            <div class="mini-profile-info">
+                <span class="mini-profile-name">Neneng Wahyuni</span>
+                <span class="mini-profile-npm">NPM: 24430123</span>
+            </div>
+        </a>
+    </div>
+</aside>
+
+<div class="main-workspace">
+    <header class="topbar">
+        <div class="topbar-left">
+            <div class="breadcrumb">
+                <span>Aplikasi Perpustakaan Sederhana</span>
+                <span>/</span>
+                <span style="color: var(--accent);">Home</span>
+            </div>
+            <div class="topbar-title">Dashboard Perpustakaan</div>
+        </div>
+        <div class="topbar-actions">
+            <span class="pill-db pill-clock" id="liveClock">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span id="clockText">--:--:--</span>
+            </span>
+            <span class="pill-db">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                </svg>
+                MySQL • myperpus
+            </span>
+            <button type="button" id="themeToggle" onclick="toggleTheme()" class="btn btn-outline btn-theme" title="Ganti Tema Gelap / Terang">
+                <span id="themeIcon">☀️</span>
+            </button>
+            <button type="button" onclick="window.print()" class="btn btn-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 6 2 18 2 18 9"/>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                    <rect x="6" y="14" width="12" height="8"/>
+                </svg>
+                Cetak Laporan
+            </button>
+        </div>
+    </header>
+    <main class="content-body">
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-orb-1"></div>
+        <div class="hero-orb-2"></div>
+
+        <div class="hero-content">
+            <div class="hero-tag">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                UTS MK BIG DATA • ILMU KOMPUTER UM METRO
+            </div>
+            <h1>Selamat Datang di Aplikasi Perpustakaan Sederhana</h1>
+            <p id="typewriterText" data-text="Portal manajemen & analitik koleksi buku berbasis PHP & MySQL (myperpus). Klik baris buku untuk detail interaktif atau jelajahi filter relasional."></p>
+            <div class="hero-actions">
+                <a href="viewbuku.html" class="btn btn-hero-light">Jelajahi Katalog Buku →</a>
+                <a href="viewfilterbukuterbaru.html" class="btn btn-hero-glass">Filter Terbitan Terbaru</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <svg width="145" height="145" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="22" width="100" height="96" rx="22" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                <path d="M40 44C40 40.6863 42.6863 38 46 38H67C68.6569 38 70 39.3431 70 41V97C70 95.3431 68.6569 94 67 94H46C42.6863 94 40 96.6863 40 100V44Z" fill="url(#bookGrad1)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+                <path d="M100 44C100 40.6863 97.3137 38 94 38H73C71.3431 38 70 39.3431 70 41V97C70 95.3431 71.3431 94 73 94H94C97.3137 94 100 96.6863 100 100V44Z" fill="url(#bookGrad2)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+                <path d="M48 52H62M48 61H60M48 70H58" stroke="#E0F2FE" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M78 52H92M78 61H90M78 70H88" stroke="#E0E7FF" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="106" cy="34" r="7" fill="#38BDF8"/>
+                <circle cx="34" cy="102" r="5" fill="#A855F7"/>
+                <defs>
+                    <linearGradient id="bookGrad1" x1="40" y1="38" x2="70" y2="97" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#38BDF8" stop-opacity="0.6"/>
+                        <stop offset="1" stop-color="#6366F1" stop-opacity="0.8"/>
+                    </linearGradient>
+                    <linearGradient id="bookGrad2" x1="70" y1="38" x2="100" y2="97" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#818CF8" stop-opacity="0.65"/>
+                        <stop offset="1" stop-color="#0EA5E9" stop-opacity="0.5"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 4 KPI Metrics (Spotlight + Count-Up) -->
+    <section class="kpi-grid">
+        <div class="kpi-card spotlight-card">
+            <div>
+                <div class="kpi-label">Total Koleksi</div>
+                <div class="kpi-value" data-count="5">0</div>
+                <div class="kpi-sub">Buku terdaftar di database</div>
+            </div>
+            <div class="kpi-icon-box bg-indigo">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="kpi-card spotlight-card">
+            <div>
+                <div class="kpi-label">Terbitan Terbaru</div>
+                <div class="kpi-value" data-count="3">0</div>
+                <div class="kpi-sub">Tahun terbit &gt; 2020</div>
+            </div>
+            <div class="kpi-icon-box bg-emerald">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="kpi-card spotlight-card">
+            <div>
+                <div class="kpi-label">UM Metro Press</div>
+                <div class="kpi-value" data-count="3">0</div>
+                <div class="kpi-sub">Koleksi penerbit kampus</div>
+            </div>
+            <div class="kpi-icon-box bg-amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2"/>
+                    <path d="M9 22v-4h6v4"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="kpi-card spotlight-card">
+            <div>
+                <div class="kpi-label">Kategori Buku</div>
+                <div class="kpi-value" data-count="3">0</div>
+                <div class="kpi-sub">Klasifikasi aktif</div>
+            </div>
+            <div class="kpi-icon-box bg-cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                    <line x1="7" y1="7" x2="7.01" y2="7"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid: Preview Table + Animated Donut Chart & Bars -->
+    <section class="bento-grid">
+        <div class="surface-card" style="margin-bottom: 0;">
+            <div class="card-head">
+                <h3>Ringkasan Katalog Buku <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">(Klik baris untuk detail)</span></h3>
+                <a href="viewbuku.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">Buka Katalog →</a>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Judul &amp; Pengarang</th>
+                            <th>Kategori</th>
+                            <th style="text-align: center;">Tahun</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                                                                    <tr data-book='{&quot;id&quot;:&quot;1&quot;,&quot;kode_buku&quot;:&quot;K00001&quot;,&quot;judul_buku&quot;:&quot;Pemrograman web&quot;,&quot;pengarang&quot;:&quot;Andi Suyono&quot;,&quot;penerbit&quot;:&quot;UM Metro Press&quot;,&quot;tahun_terbit&quot;:&quot;2025&quot;,&quot;nama_kategori_buku&quot;:&quot;Buku Ajar&quot;}' onclick="openBookModal(this)">
+                                    <td><span class="code-badge">K00001</span></td>
+                                    <td>
+                                        <div class="book-title">Pemrograman web</div>
+                                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Andi Suyono</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-ajar">
+                                            Buku Ajar                                        </span>
+                                    </td>
+                                    <td style="text-align: center; font-weight: 700;">2025</td>
+                                </tr>
+                                                            <tr data-book='{&quot;id&quot;:&quot;2&quot;,&quot;kode_buku&quot;:&quot;K00002&quot;,&quot;judul_buku&quot;:&quot;Sistem Operasi&quot;,&quot;pengarang&quot;:&quot;Cahyo Gumilar&quot;,&quot;penerbit&quot;:&quot;UM Metro Press&quot;,&quot;tahun_terbit&quot;:&quot;2019&quot;,&quot;nama_kategori_buku&quot;:&quot;Buku Referensi&quot;}' onclick="openBookModal(this)">
+                                    <td><span class="code-badge">K00002</span></td>
+                                    <td>
+                                        <div class="book-title">Sistem Operasi</div>
+                                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Cahyo Gumilar</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-ref">
+                                            Buku Referensi                                        </span>
+                                    </td>
+                                    <td style="text-align: center; font-weight: 700;">2019</td>
+                                </tr>
+                                                            <tr data-book='{&quot;id&quot;:&quot;3&quot;,&quot;kode_buku&quot;:&quot;K00003&quot;,&quot;judul_buku&quot;:&quot;Kalkulus Lanjut&quot;,&quot;pengarang&quot;:&quot;Budi Handoko&quot;,&quot;penerbit&quot;:&quot;Andi Publisher&quot;,&quot;tahun_terbit&quot;:&quot;2017&quot;,&quot;nama_kategori_buku&quot;:&quot;Buku Praktikum&quot;}' onclick="openBookModal(this)">
+                                    <td><span class="code-badge">K00003</span></td>
+                                    <td>
+                                        <div class="book-title">Kalkulus Lanjut</div>
+                                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Budi Handoko</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-prak">
+                                            Buku Praktikum                                        </span>
+                                    </td>
+                                    <td style="text-align: center; font-weight: 700;">2017</td>
+                                </tr>
+                                                            <tr data-book='{&quot;id&quot;:&quot;4&quot;,&quot;kode_buku&quot;:&quot;K00004&quot;,&quot;judul_buku&quot;:&quot;Sistem Digital&quot;,&quot;pengarang&quot;:&quot;Budi Handoko&quot;,&quot;penerbit&quot;:&quot;Andi Publisher&quot;,&quot;tahun_terbit&quot;:&quot;2022&quot;,&quot;nama_kategori_buku&quot;:&quot;Buku Referensi&quot;}' onclick="openBookModal(this)">
+                                    <td><span class="code-badge">K00004</span></td>
+                                    <td>
+                                        <div class="book-title">Sistem Digital</div>
+                                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Budi Handoko</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-ref">
+                                            Buku Referensi                                        </span>
+                                    </td>
+                                    <td style="text-align: center; font-weight: 700;">2022</td>
+                                </tr>
+                                                            <tr data-book='{&quot;id&quot;:&quot;5&quot;,&quot;kode_buku&quot;:&quot;K00005&quot;,&quot;judul_buku&quot;:&quot;Technopreneur&quot;,&quot;pengarang&quot;:&quot;Andi Suyono&quot;,&quot;penerbit&quot;:&quot;UM Metro Press&quot;,&quot;tahun_terbit&quot;:&quot;2025&quot;,&quot;nama_kategori_buku&quot;:&quot;Buku Ajar&quot;}' onclick="openBookModal(this)">
+                                    <td><span class="code-badge">K00005</span></td>
+                                    <td>
+                                        <div class="book-title">Technopreneur</div>
+                                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Andi Suyono</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-ajar">
+                                            Buku Ajar                                        </span>
+                                    </td>
+                                    <td style="text-align: center; font-weight: 700;">2025</td>
+                                </tr>
+                                                                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Animated SVG Donut Chart -->
+            <div class="surface-card spotlight-card" style="margin-bottom: 0;">
+                <div class="card-head">
+                    <h3>Analitik Kategori (Donut Chart)</h3>
+                </div>
+                <div class="card-pad">
+                                        <div class="donut-wrap">
+                        <div class="donut-svg-box">
+                            <svg width="150" height="150" viewBox="0 0 150 150" style="transform: rotate(-90deg);">
+                                <circle cx="75" cy="75" r="56" fill="none" stroke="rgba(148,163,184,0.15)" stroke-width="14"/>
+                                                                <circle class="donut-segment"
+                                    cx="75" cy="75" r="56"
+                                    fill="none"
+                                    stroke="#38bdf8"
+                                    stroke-width="14"
+                                    stroke-dasharray="140.74335088082 351.85837720206"
+                                    stroke-dashoffset="-351.85837720206"
+                                    data-target-offset="0"
+                                    stroke-linecap="butt">
+                                    <title>Buku Ajar: 2 buku</title>
+                                </circle>
+                                                                <circle class="donut-segment"
+                                    cx="75" cy="75" r="56"
+                                    fill="none"
+                                    stroke="#2dd4bf"
+                                    stroke-width="14"
+                                    stroke-dasharray="140.74335088082 351.85837720206"
+                                    stroke-dashoffset="-351.85837720206"
+                                    data-target-offset="-140.74335088082"
+                                    stroke-linecap="butt">
+                                    <title>Buku Referensi: 2 buku</title>
+                                </circle>
+                                                                <circle class="donut-segment"
+                                    cx="75" cy="75" r="56"
+                                    fill="none"
+                                    stroke="#818cf8"
+                                    stroke-width="14"
+                                    stroke-dasharray="70.371675440411 351.85837720206"
+                                    stroke-dashoffset="-351.85837720206"
+                                    data-target-offset="-281.48670176165"
+                                    stroke-linecap="butt">
+                                    <title>Buku Praktikum: 1 buku</title>
+                                </circle>
+                                                            </svg>
+                            <div class="donut-center">
+                                <strong data-count="5">0</strong>
+                                <span>Total Buku</span>
+                            </div>
+                        </div>
+
+                        <div class="donut-legend">
+                                                            <div class="legend-row">
+                                    <div class="legend-left">
+                                        <span class="legend-dot" style="background: #38bdf8;"></span>
+                                        <span>Buku Ajar</span>
+                                    </div>
+                                    <span style="color: var(--text-muted);">2 (40%)</span>
+                                </div>
+                                                            <div class="legend-row">
+                                    <div class="legend-left">
+                                        <span class="legend-dot" style="background: #2dd4bf;"></span>
+                                        <span>Buku Referensi</span>
+                                    </div>
+                                    <span style="color: var(--text-muted);">2 (40%)</span>
+                                </div>
+                                                            <div class="legend-row">
+                                    <div class="legend-left">
+                                        <span class="legend-dot" style="background: #818cf8;"></span>
+                                        <span>Buku Praktikum</span>
+                                    </div>
+                                    <span style="color: var(--text-muted);">1 (20%)</span>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proporsi Penerbit -->
+            <div class="surface-card spotlight-card" style="margin-bottom: 0;">
+                <div class="card-head">
+                    <h3>Proporsi Penerbit</h3>
+                </div>
+                <div class="card-pad">
+                                                                    <div class="dist-item">
+                            <div class="dist-top">
+                                <span>UM Metro Press</span>
+                                <span style="color: var(--text-muted);">3 buku (60%)</span>
+                            </div>
+                            <div class="dist-track">
+                                <div class="dist-fill" data-width="60%" style="background: linear-gradient(90deg, #2dd4bf, #38bdf8);"></div>
+                            </div>
+                        </div>
+                                                                    <div class="dist-item">
+                            <div class="dist-top">
+                                <span>Andi Publisher</span>
+                                <span style="color: var(--text-muted);">2 buku (40%)</span>
+                            </div>
+                            <div class="dist-track">
+                                <div class="dist-fill" data-width="40%" style="background: linear-gradient(90deg, #2dd4bf, #38bdf8);"></div>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+</div>
+</div>
+
+<!-- Book Detail Interactive Modal -->
+<div class="modal-backdrop" id="bookModal" onclick="if(event.target===this) closeBookModal()">
+    <div class="modal-box">
+        <div class="modal-top">
+            <div>
+                <span class="code-badge" id="mKode" style="margin-bottom: 8px;">K00001</span>
+                <h3 id="mJudul" style="font-size: 20px; font-weight: 800; color: var(--text-main);">Judul Buku</h3>
+            </div>
+            <button type="button" class="modal-close" onclick="closeBookModal()">&times;</button>
+        </div>
+        <div class="modal-grid">
+            <div class="modal-cell">
+                <span>ID Record</span>
+                <strong id="mId">#1</strong>
+            </div>
+            <div class="modal-cell">
+                <span>Tahun Terbit</span>
+                <strong id="mTahun">2025</strong>
+            </div>
+            <div class="modal-cell">
+                <span>Pengarang</span>
+                <strong id="mPengarang">-</strong>
+            </div>
+            <div class="modal-cell">
+                <span>Penerbit</span>
+                <strong id="mPenerbit">-</strong>
+            </div>
+            <div class="modal-cell" style="grid-column: span 2;">
+                <span>Kategori Buku</span>
+                <strong id="mKategori">-</strong>
+            </div>
+        </div>
+        <div style="margin-top: 20px; text-align: right;">
+            <button type="button" class="btn btn-outline" onclick="closeBookModal()">Tutup Detail</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// 1. Theme Persistence (Midnight Aurora Glassmorphism Default vs Optional Light)
+(function initTheme() {
+    const saved = localStorage.getItem('perpusThemeV3');
+    const icon = document.getElementById('themeIcon');
+    if (saved === 'light') {
+        document.body.classList.add('theme-light');
+        if (icon) icon.textContent = '🌙';
+    } else {
+        if (icon) icon.textContent = '☀️';
+    }
+})();
+
+function toggleTheme() {
+    document.body.classList.toggle('theme-light');
+    const isLight = document.body.classList.contains('theme-light');
+    localStorage.setItem('perpusThemeV3', isLight ? 'light' : 'dark');
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = isLight ? '🌙' : '☀️';
+}
+
+// 2. Live Clock WIB
+function updateClock() {
+    const el = document.getElementById('clockText');
+    if (!el) return;
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    el.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} WIB`;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// 3. Interactive Big Data Particle Mesh Canvas
+(function initParticles() {
+    const canvas = document.getElementById('bgParticles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    const mouse = { x: null, y: null };
+
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+    const count = Math.min(55, Math.floor((window.innerWidth * window.innerHeight) / 24000));
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.55,
+            vy: (Math.random() - 0.5) * 0.55,
+            r: Math.random() * 2 + 1.2
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, w, h);
+        const isLight = document.body.classList.contains('theme-light');
+        const dotColor = isLight ? 'rgba(2, 132, 199, 0.28)' : 'rgba(56, 189, 248, 0.48)';
+        const lineRgb  = isLight ? '2, 132, 199' : '45, 212, 191';
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > w) p.vx *= -1;
+            if (p.y < 0 || p.y > h) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = dotColor;
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+                const q = particles[j];
+                const dx = p.x - q.x, dy = p.y - q.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 135) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(q.x, q.y);
+                    ctx.strokeStyle = `rgba(${lineRgb}, ${(1 - dist / 135) * 0.18})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+
+            if (mouse.x !== null) {
+                const md = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+                if (md < 140) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - md / 140) * 0.3})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+
+// 4. DOM Ready: Count-Up, Donut Chart, Bars, Typewriter, Spotlight & 3D Tilt
+document.addEventListener('DOMContentLoaded', () => {
+    // Count-Up KPI
+    document.querySelectorAll('[data-count]').forEach(el => {
+        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        const duration = 750;
+        const start = performance.now();
+        function step(now) {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased).toLocaleString('id-ID');
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString('id-ID');
+        }
+        requestAnimationFrame(step);
+    });
+
+    // Progress Bars & SVG Donut Segments
+    setTimeout(() => {
+        document.querySelectorAll('.dist-fill[data-width]').forEach(bar => {
+            bar.style.width = bar.getAttribute('data-width');
+        });
+        document.querySelectorAll('.donut-segment[data-target-offset]').forEach(seg => {
+            seg.style.strokeDashoffset = seg.getAttribute('data-target-offset');
+        });
+    }, 150);
+
+    // Typewriter Hero Subtitle
+    const tw = document.getElementById('typewriterText');
+    if (tw) {
+        const full = tw.getAttribute('data-text') || '';
+        let idx = 0;
+        function typeNext() {
+            if (idx <= full.length) {
+                tw.textContent = full.slice(0, idx);
+                idx++;
+                setTimeout(typeNext, 14);
+            }
+        }
+        typeNext();
+    }
+
+    // Cursor Spotlight on Cards
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+        });
+    });
+
+    // 3D Tilt on Profile Card (me.php)
+    const tiltCard = document.getElementById('tiltProfileCard');
+    if (tiltCard) {
+        tiltCard.addEventListener('mousemove', e => {
+            const r = tiltCard.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - 0.5;
+            const y = (e.clientY - r.top) / r.height - 0.5;
+            tiltCard.style.transform = `perspective(700px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-3px)`;
+        });
+        tiltCard.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg)';
+        });
+    }
+});
+
+// 5. Book Detail Modal
+function openBookModal(tr) {
+    try {
+        const data = JSON.parse(tr.getAttribute('data-book'));
+        document.getElementById('mKode').textContent = data.kode_buku || '-';
+        document.getElementById('mJudul').textContent = data.judul_buku || '-';
+        document.getElementById('mId').textContent = '#' + (data.id || '-');
+        document.getElementById('mTahun').textContent = data.tahun_terbit || '-';
+        document.getElementById('mPengarang').textContent = data.pengarang || '-';
+        document.getElementById('mPenerbit').textContent = data.penerbit || '-';
+        document.getElementById('mKategori').textContent = data.nama_kategori_buku || 'Koleksi Perpustakaan';
+        document.getElementById('bookModal').classList.add('open');
+    } catch (err) {}
+}
+
+function closeBookModal() {
+    document.getElementById('bookModal').classList.remove('open');
+}
+
+// 6. Interactive Table Column Sorting
+const sortState = {};
+function sortTable(tableId, colIdx, isNumeric) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr[data-row]'));
+    const key = `${tableId}_${colIdx}`;
+    sortState[key] = !sortState[key];
+    const asc = sortState[key];
+
+    rows.sort((a, b) => {
+        let va = a.cells[colIdx].textContent.replace(/[#✓]/g, '').trim();
+        let vb = b.cells[colIdx].textContent.replace(/[#✓]/g, '').trim();
+        if (isNumeric) {
+            return asc ? (parseFloat(va) - parseFloat(vb)) : (parseFloat(vb) - parseFloat(va));
+        }
+        return asc ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+
+    rows.forEach(r => tbody.appendChild(r));
+}
+
+// 7. SQL Inspector Toggle & Copy
+function toggleSql() {
+    const body = document.getElementById('sqlBody');
+    const icon = document.getElementById('sqlToggleText');
+    if (!body) return;
+    body.classList.toggle('open');
+    if (icon) icon.textContent = body.classList.contains('open') ? 'Sembunyikan ▲' : 'Tampilkan SQL ▼';
+}
+
+function copySql(btn) {
+    const pre = btn.parentElement.querySelector('pre');
+    if (!pre) return;
+    navigator.clipboard.writeText(pre.textContent).then(() => {
+        const old = btn.textContent;
+        btn.textContent = '✓ Tersalin!';
+        setTimeout(() => btn.textContent = old, 1500);
+    });
+}
+
+// 8. Realtime Search & Category Pills
+function filterTable(inputId, tableId, countId) {
+    const input = document.getElementById(inputId);
+    const table = document.getElementById(tableId);
+    if (!input || !table) return;
+    const query = input.value.toLowerCase();
+    const rows = table.querySelectorAll('tbody tr[data-row]');
+    let visible = 0;
+
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const activeCat = window.activeCategoryFilter || 'all';
+        const rowCat = (row.getAttribute('data-category') || '').toLowerCase();
+        if (text.indexOf(query) > -1 && (activeCat === 'all' || rowCat === activeCat.toLowerCase())) {
+            row.style.display = '';
+            visible++;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    const countEl = document.getElementById(countId);
+    if (countEl) countEl.textContent = visible;
+}
+
+function setCategoryFilter(cat, btnEl, inputId, tableId, countId) {
+    window.activeCategoryFilter = cat;
+    document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    filterTable(inputId, tableId, countId);
+}
+</script>
+</body>
+</html>
