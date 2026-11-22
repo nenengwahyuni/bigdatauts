@@ -1,12 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/index.php", "destination": "/index.html" },
-    { "source": "/viewbuku.php", "destination": "/viewbuku.html" },
-    { "source": "/viewfilterbukuterbaru.php", "destination": "/viewfilterbukuterbaru.html" },
-    { "source": "/viewfilterbukuummetropress.php", "destination": "/viewfilterbukuummetropress.html" },
-    { "source": "/me.php", "destination": "/me.html" }
+  "redirects": [
+    { "source": "/index.php", "destination": "/", "permanent": true },
+    { "source": "/viewbuku.php", "destination": "/viewbuku.html", "permanent": true },
+    { "source": "/viewfilterbukuterbaru.php", "destination": "/viewfilterbukuterbaru.html", "permanent": true },
+    { "source": "/viewfilterbukuummetropress.php", "destination": "/viewfilterbukuummetropress.html", "permanent": true },
+    { "source": "/me.php", "destination": "/me.html", "permanent": true }
   ]
 }
